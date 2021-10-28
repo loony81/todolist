@@ -1,0 +1,4 @@
+{
+	"jwtkey": "",
+	"db": "mongodb://localhost/todoapp"
+}
