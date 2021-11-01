@@ -1,0 +1,5 @@
+{
+	"port": "PORT",
+	"jwtkey": "todo_jwtkey",
+	"db": "todo_db"
+}
