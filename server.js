@@ -18,13 +18,15 @@ mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
 //middleware
 app.use(helmet())
 app.use(express.static(__dirname + '/dist'))
-app.use(express.json())
-
+app.use(express.json()) // to handle post and put requests
+app.use(express.urlencoded({extended: true})) // if data is sent via form
 
 //routes
 app.get('/', (req, res) => {
   res.sendFile('index.html')
 })
+app.use('/api/todos', require('./routes/todos'))
+app.use('/api/users', require('./routes/users'))
 
 app.get('*', (req, res) => {
  	res.redirect('/')
