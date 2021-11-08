@@ -27,6 +27,7 @@ app.get('/', (req, res) => {
 })
 app.use('/api/todos', require('./routes/todos'))
 app.use('/api/users', require('./routes/users'))
+app.use('/api/auth', require('./routes/auth'))
 
 app.get('*', (req, res) => {
  	res.redirect('/')
