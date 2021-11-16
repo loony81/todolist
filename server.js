@@ -1,4 +1,5 @@
 const express = require('express')
+require('express-async-errors') // to monkey patch async route handlers with error handling middleware
 const helmet = require('helmet') // protects the app by adding http headers
 const winston = require('winston') // a package for logging exceptions
 const config = require('config')
@@ -32,6 +33,9 @@ app.use('/api/auth', require('./routes/auth'))
 app.get('*', (req, res) => {
  	res.redirect('/')
 })
+
+//error handling middleware must be registered after all the other middlewares and routes
+app.use(require('./middleware/error')) 
 
 
 const server = app.listen(port, () => console.log(`Listening on port ${port} ...`))
