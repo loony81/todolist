@@ -1,20 +1,17 @@
 const express = require('express')
-require('express-async-errors') // to monkey patch async route handlers with error handling middleware
 const helmet = require('helmet') // protects the app by adding http headers
 const winston = require('winston') // a package for logging exceptions
 const config = require('config')
 const Joi = require('joi') //a package for data validation in Node/MongoDB applications
 Joi.objectId = require('joi-objectid')(Joi) // adds id validation to Joi
-const mongoose = require('mongoose')
 const app = express()
+
+require('./startup/logging')() // handling and logging errors
+require('./startup/config')() //  configuration settings
+require('./startup/db')() // db related logic
 
 
 const port = config.get('port')
-const db = config.get('db')
-
-mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
-	.then(() => console.log(`connected to ${db} ...`))
-	.catch(err => console.error(`could not connect to MongoDB: ${err}`))
 
 //middleware
 app.use(helmet())
@@ -38,4 +35,4 @@ app.get('*', (req, res) => {
 app.use(require('./middleware/error')) 
 
 
-const server = app.listen(port, () => console.log(`Listening on port ${port} ...`))
+const server = app.listen(port, () => winston.info(`Listening on port ${port} ...`))
