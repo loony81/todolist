@@ -10,7 +10,10 @@
   "engines": {
     "node": "14.18.1"
   },
-  "keywords": ["react", "mern"],
+  "keywords": [
+    "react",
+    "mern"
+  ],
   "author": "Roman Nazarenko <r.nazarenko.81@gmail.com>",
   "license": "ISC",
   "dependencies": {
@@ -18,14 +21,11 @@
     "config": "^3.3.3",
     "express": "^4.17.1",
     "express-async-errors": "^3.1.1",
-    "fawn": "^2.1.5",
     "helmet": "^4.4.1",
     "joi": "^13.1.0",
     "joi-objectid": "^3.0.1",
     "jsonwebtoken": "^8.5.1",
-    "moment": "^2.29.1",
     "mongoose": "^5.11.8",
-    "winston": "^3.3.3",
-    "winston-mongodb": "^5.0.5"
+    "winston": "^3.3.3"
   }
 }
