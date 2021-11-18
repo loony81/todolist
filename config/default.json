@@ -1,5 +1,5 @@
 {
 	"port": 5000,
-	"jwtkey": "",
+	"jwtkey": "Hello World",
 	"db": "mongodb://localhost/todoapp"
 }
