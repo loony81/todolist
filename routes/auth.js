@@ -16,20 +16,20 @@ const validate = req => {
 
 router.post('/', async (req, res) => {
 	const {error} = validate(req.body)
-	if(error) return res.status(400).send(error.details[0].message)
+	if(error) return res.status(400).send({message: error.details[0].message})
 	let {email, password} = req.body
 	// make sure we have a user with the given email in the database 
 	let user = await User.findOne({email})
 	//if there is no such user we don't want to tell the user why the authentication failed
 	// so instead of sending a 404 response we will send a 400 error response to obscure the failure
-	if(!user) return res.status(400).send('Invalid email or password')
+	if(!user) return res.status(400).send({message: 'Invalid email or password'})
 	//if a user with this email was found in the database, compare their password with the hashed password
 	const validPassword = await bcrypt.compare(password, user.password)
 	// and again if the comparison fails, send an obscure response
-	if(!validPassword) return res.status(400).send('Invalid email or password')
+	if(!validPassword) return res.status(400).send({message: 'Invalid email or password'})
     //if everything's ok then generate a jwt token and send it to a user inside a header
     const token = user.generateAuthToken()
-	res.header('x-auth-token', token).send('You have been successully logged in')
+	res.header('x-auth-token', token).send({message: 'You have been successully logged in'})
 })
 
 module.exports = router

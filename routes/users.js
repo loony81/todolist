@@ -5,11 +5,11 @@ const {User, validate} = require('../models/user')
 
 router.post('/', async (req, res) => {
 	const {error} = validate(req.body)
-	if(error) return res.status(400).send(error.details[0].message)
+	if(error) return res.status(400).send({message: error.details[0].message})
 	let {name, email, password} = req.body
 	// make sure a user with this email is not registered already
 	let user = await User.findOne({email})
-	if(user) return res.status(400).send('User with this email is already registered')
+	if(user) return res.status(400).send({message: 'User with this email is already registered'})
 	//hash the password before saving it to the database
 	//a salt is a random string that is added before or after the password, so every time 
 	// we hash the same password with a different salt, we get different result
