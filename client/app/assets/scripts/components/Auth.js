@@ -1,4 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react'
+import {useHistory} from 'react-router-dom'
 import {GlobalContext} from '../context'
 import {authenticate} from '../utils/api'
 
@@ -8,6 +9,7 @@ const Auth = () => {
 	const [error, setError] = useState('')
 	const [form, setForm] = useState({})
 	const [loading, setLoading] = useState(false)
+	const history = useHistory()
 
 	useEffect(() => {
 		if(error) setError('')
@@ -37,6 +39,8 @@ const Auth = () => {
 			email: '',
 			password: ''
 		})
+		//redirect to main page
+		history.push('/')
 	}
 
 	return (
