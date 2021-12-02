@@ -1,7 +1,9 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
+import {GlobalContext} from '../context'
 import {authenticate} from '../utils/api'
 
 const Auth = () => {
+	const {isAuthenticated, setIsAuthenticated} = useContext(GlobalContext) 
 	const [isRegistered, setIsRegistered] = useState(false)
 	const [error, setError] = useState('')
 	const [form, setForm] = useState({})
@@ -28,6 +30,7 @@ const Auth = () => {
 			setError(result.error)
 			return
 		} 
+		setIsAuthenticated(true)
 		// clear the form
 		setForm({
 			name: '',

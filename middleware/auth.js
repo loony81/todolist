@@ -7,7 +7,7 @@ const config = require('config')
 module.exports = function (req,res,next){
 	const token = req.header('x-auth-token')
 	//if there's no token at all
-	if(!token) return res.status(401).send('Access denied.')
+	if(!token) return res.status(401).send({message: 'Access denied.'})
 
 	try{
 		const decodedPayload = jwt.verify(token, config.get('jwtkey'))
@@ -16,6 +16,6 @@ module.exports = function (req,res,next){
 		next()
 	} catch(ex){
 		//user provided jwt but it is not valid that's why we have a bad request
-		res.status(400).send('Invalid token')
+		res.status(400).send({message: 'Invalid token'})
 	}
 }

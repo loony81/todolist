@@ -1,5 +1,4 @@
 export async function authenticate(url, body){
-
 	const payload = {
 		method: 'POST', 
 		headers: new Headers({'Content-Type': 'application/json'}),
