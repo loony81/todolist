@@ -19,7 +19,7 @@ const App = () => {
 	const [isAuthenticated, setIsAuthenticated] = useState(false)
 
 	//when the app is loaded for the first time or the page is just reloaded, 
-	//we need to check if a user is still authenticated
+	//we need to check if a user is still authenticated since the previous session
 
 	useEffect(() => {
 		const token = localStorage.getItem('x-auth-token')

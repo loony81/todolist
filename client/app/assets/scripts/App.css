@@ -43,8 +43,10 @@ header h2 {
   margin: .5rem auto;
 }
 .registered {
+  font-size: 0.85rem;
+}
+.registered span{
   cursor: pointer;
-  font-size: 0.9rem;
 }
 /*****************************LIST STYLES*****************************/
 .list {

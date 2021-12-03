@@ -7,7 +7,6 @@ const Navbar = () => {
 	const location = useLocation()
 
 	const handleLogout = e => {
-		e.preventDefault()
 		localStorage.removeItem('x-auth-token')
 		setIsAuthenticated(false)
 	}
@@ -16,7 +15,7 @@ const Navbar = () => {
 	if(location.pathname === '/'){
 		return (
 			<>
-				{!isAuthenticated && <Link to='/auth'>REGISTER</Link>}
+				{!isAuthenticated && <Link to='/auth'>LOGIN</Link>}
 				{isAuthenticated && <Link to='/' onClick={handleLogout}>LOGOUT</Link>}
 			</>
 		)

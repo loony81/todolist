@@ -5,7 +5,7 @@ import {authenticate} from '../utils/api'
 
 const Auth = () => {
 	const {isAuthenticated, setIsAuthenticated} = useContext(GlobalContext) 
-	const [isRegistered, setIsRegistered] = useState(false)
+	const [isRegistered, setIsRegistered] = useState(true)
 	const [error, setError] = useState('')
 	const [form, setForm] = useState({})
 	const [loading, setLoading] = useState(false)
@@ -45,7 +45,6 @@ const Auth = () => {
 
 	return (
 		<section className='auth'>
-			{!isRegistered && <h2>Register and make your todos available across multiple devices</h2>}
 			<form method='POST' onSubmit={handleSubmit}>
 				{!isRegistered && <input type='text' name='name' value={form.name} onChange={handleForm} className='authInput' placeholder='Your name' required />}
 				<input type='email' name='email' value={form.email} onChange={handleForm} className='authInput' placeholder='Your email' required />
@@ -53,7 +52,7 @@ const Auth = () => {
 				<p className='error'>{error}</p>
 				{isRegistered ? <button disabled={loading ? true : false}>Login</button> : <button disabled={loading ? true : false}>Register</button>}
 			</form>
-			{!isRegistered && <p className='registered' onClick={()=> setIsRegistered(true)}>Already have an account?</p>}
+			{isRegistered && <p className='registered'>Don't have an account yet? <span onClick={()=> setIsRegistered(false)}>Register and make your todos available across multiple devices</span></p>}
 		</section>
 		
 	) 
