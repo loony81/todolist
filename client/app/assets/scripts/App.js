@@ -16,19 +16,23 @@ if(module.hot) module.hot.accept()
 
 
 const App = () => {
-
+	const [todos, setTodos] = useState([])
 	const [isAuthenticated, setIsAuthenticated] = useState(false)
 
-	//when the app is loaded for the first time or the page is just reloaded, 
-	//we need to check if a user is still authenticated since the previous session
-	// the jwt-check-expiration package allows to check if the jwt is expired or not
-	// locally without sending a request to the server 
 	useEffect(() => {
+		//when the app is loaded for the first time or the page is just reloaded, 
+		//we need to check if a user is still authenticated since the previous session
+		// the jwt-check-expiration package allows to check if the jwt is expired or not
+		// locally without sending a request to the server 
 		const token = localStorage.getItem('x-auth-token')
 		if(token){
 			if(isJwtExpired(localStorage.getItem('x-auth-token'))) {
 			} else setIsAuthenticated(true)
 		}
+		// pull todos from the local storage first
+		// getTodosFromLS()
+		// and then if the user is logged in, from the server
+		// loadTodosFromServer()
 	}, [])
 
 	return (
