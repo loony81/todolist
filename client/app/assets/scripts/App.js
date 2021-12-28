@@ -31,38 +31,89 @@ const App = () => {
 			} else setIsAuthenticated(true)
 		}
 		// pull todos from the local storage first
-		getTodosFromLS()
-		
+		const localTodos = getTodosFromLS()
+		if(localTodos) {
+			//get only those todo that haven't been deleted when a user wasn't logged in
+			const newTodos = localTodos.filter(todo => !todo.deleted)
+			newTodos.length && setTodos(newTodos)
+		}
+		console.log('App is mounted')
 	}, [])
 
 	useEffect(() => {
 		// and then if the user is logged in fetch todos from the server
-		isAuthenticated && loadTodosFromServer()
+		isAuthenticated && syncTodos()
 	}, [isAuthenticated])
 
 	const getTodosFromLS = () => {
-		let todos = localStorage.getItem('todos')
-		if(todos){
-			console.log(todos)
-			todos = JSON.parse(todos)
-			setTodos(todos)
-		} 
+		const todos = localStorage.getItem('todos')
+		if(todos) return JSON.parse(todos)
+		return null
 	}
 
-	const loadTodosFromServer = async () => {
+	const loadAllTodosFromServer = async () => {
 		const remoteTodos = await makeRequest('/api/todos')
-		if(remoteTodos.error) console.log(remoteTodos.error)
-		else {
-			// now we need to sync remote todos with local todos
+		if(remoteTodos.error) return console.log(remoteTodos.error)
+		return remoteTodos
+	}
+
+	const syncTodos = async remoteTodos => {
+		let newTodos
+		const localTodos = getTodosFromLS()
+		if(localTodos){
+			//first of all we need to filter out those todos from local storage
+			// that were added to it when a user wasn't logged in, which means they don't have an id
+			// and also they are still not flagged as deleted
+			const todosWithoutId = localTodos.filter(todo => !todo._id && !todo.deleted)
+			// add them to remote storage
+			if(todosWithoutId.length) {
+				for(let todo of todosWithoutId) {
+					newTodos = await addTodoToServer(todo.name)
+				}
+			}
+			// remove from remote storage all those todos which were deleted from local storage
+			// when a user wasn't logged in 
+			const deletedTodos = localTodos.filter(todo => todo.deleted)
+			// remove them from remote storage
+			if(deletedTodos.length) {
+				for(let todo of deletedTodos){
+					newTodos = await removeTodoFromServer(todo._id)
+				}
+			}
+		}
+		//removeTodoFromServer and addTodoToServer both return all todos from the remote server, 
+		//so if newTodos contains something we can use it to reset both local storage and todos state
+		if(!newTodos){
+			//if newTodos is still a falsy value, it means we didn't make any requests to the server
+			// but we still need to load remote todos because there might be todos added from another device
+			newTodos = await loadAllTodosFromServer()
+		}
+		// if there is something in newTodos, then reset local storage and state
+		if(newTodos.todos.length){
+			localStorage.setItem('todos', JSON.stringify(newTodos.todos))
+			setTodos(newTodos.todos)
 		}
 	}
+
+	const addTodoToServer = async name => {
+		
+	}
+
+	const removeTodoFromServer = async id => {
+		
+	}
+
+	const toggleCompletionOnServer = (id, status) => {
+		
+	}
+
 	console.log('App is rendered')
 	return (
 	    <div>
 	      <Router>
 	      	<GlobalContext.Provider value={{isAuthenticated, setIsAuthenticated}} >
 		    	<Header />
-		        <AppRouter />
+		        <AppRouter todos={todos} />
 		        <Footer />
 	        </GlobalContext.Provider>
 	      </Router>
