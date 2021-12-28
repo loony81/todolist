@@ -9,7 +9,6 @@ export async function authenticate(url, body){
 		.then(response => {
 			if(!response.ok){
 				return response.json().then(data => {
-
 					throw new Error(data.message)
 				})
 			} else {
@@ -23,4 +22,26 @@ export async function authenticate(url, body){
 		.catch(err => ({error: err.message}))
 }
 
+export async function makeRequest(url, method = 'GET', body = null){
+	const headers = new Headers({'x-auth-token': localStorage.getItem('x-auth-token'), 'Content-Type': 'application/json'})
+	let payload = method !== 'GET' ? 
+		{
+			method, 
+			headers,
+			body: JSON.stringify(body)
+		} : {
+			method,
+			headers
+		}
 
+	return fetch(url, payload)
+		.then(response => {
+			if(!response.ok){
+				return response.json().then(data => {
+					throw new Error(data.message)
+				})
+			} 
+			return response.json()
+		})
+		.catch(err => ({error: err.message}))
+}
