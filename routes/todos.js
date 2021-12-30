@@ -6,8 +6,8 @@ const auth = require('../middleware/auth')
 
 router.get('/', auth, async (req, res) => {
 	// get user's id from jwt payload, find him in the database and get his todos
-	const todos  = await User.findById(req.user._id).select('todos')
-	res.json(todos)
+	const result  = await User.findById(req.user._id).select('todos')
+	res.json(result.todos)
 })
  // this route is unnecessary but I included it for the sake of conformity with the REST api
 router.get('/:id', auth, async (req, res) => {
@@ -36,11 +36,10 @@ router.put('/:id', auth, async (req, res) => {
   const user  = await User.findById(req.user._id)
   const todo = user.todos.id(req.params.id)
   if (!todo) return res.status(404).send({message: 'The todo with the given ID was not found.'})
-  todo.name = req.body.name
-  todo.completed = req.body.completed || todo.completed
+  todo.completed = req.body.completed
   await user.save()
   
-  res.status(201).json(todo)
+  res.status(201).json(user.todos)
 })
 
 router.delete('/:id', auth, async (req,res) => {
