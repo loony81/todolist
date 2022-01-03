@@ -52,7 +52,7 @@ export async function makeRequest(url, method = 'GET', body = null){
 
 // self-explanatory
 const loadAllTodosFromServer = async () => {
-	const remoteTodos = await makeRequest('/api/todos')
+	const remoteTodos = await makeRequest(todosApi)
 	if(remoteTodos.error) {
 		console.log(remoteTodos.error)
 		return null

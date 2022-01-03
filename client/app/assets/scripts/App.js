@@ -50,6 +50,14 @@ const App = () => {
 			const newTodos = localTodos.filter(todo => !todo.deletedLocally)
 			newTodos.length && setTodos(newTodos)
 		}
+		// to synchronize authentication state in case more than one instance
+		// of the app is opened in the browser
+		window.addEventListener('storage', e => {
+			if(e.key === 'x-auth-token'){
+				if(e.newValue) setIsAuthenticated(true)
+				else setIsAuthenticated(false)
+			}
+		})
 	}, [])
 
 	useEffect(() => {
