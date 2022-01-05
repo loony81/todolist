@@ -1,18 +1,19 @@
 import React from 'react'
+import TodoForm from './TodoForm'
+import TodoItem from './TodoItem'
 
-const TodoList = () => {
-	// const [todos, setTodos] = useState([])
-	// const TODOS_URL = '/api/todos'
-	// const USERS_URL = '/api/users'
-	// const AUTH_URL = '/api/auth'
-
-	// const fetchTodos = () => {
-	// 	fetch()
-	// }
-
+const TodoList = ({todos, addTodo, removeTodo, toggleCompletion}) => {
+	
+	//if todo has no _id, then name is used as key inside map
+	console.log('TodoList is rendered')
 	return (
 		<>
-			<ul className='list'></ul>
+			<TodoForm addTodo={addTodo} />
+			<ul className='list'>
+				{todos.map(todo => {
+					return <TodoItem todo={todo} key={todo._id || todo.name} removeTodo={removeTodo} toggleCompletion={toggleCompletion} />
+				})}
+			</ul>
 		</>
 	) 
 }

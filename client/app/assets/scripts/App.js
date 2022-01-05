@@ -197,7 +197,7 @@ const App = () => {
 	}
 	console.log('App is rendered')
 	return (
-	    <div>
+	    <div className='container'>
 	      <Router>
 	      	<GlobalContext.Provider value={{isAuthenticated, setIsAuthenticated}} >
 		    	<Header />

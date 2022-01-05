@@ -4,7 +4,7 @@ const TodoForm = ({addTodo}) => {
 	const[inputValue, setInputValue] = useState('')
 
 	const handleInput = e => {
-		e.target.value.length < 61 && setInputValue(e.target.value)
+		e.target.value.length < 101 && setInputValue(e.target.value)
 	}
 
 	const handleSubmit = e => {
@@ -20,7 +20,7 @@ const TodoForm = ({addTodo}) => {
 				onChange={handleInput}
 				onKeyPress={handleSubmit}
 				placeholder='insert your task here ...' 
-				maxlength='60'
+				maxlength='100'
 			/>
 		</section>
 		

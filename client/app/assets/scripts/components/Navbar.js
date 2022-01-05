@@ -15,15 +15,15 @@ const Navbar = () => {
 	if(location.pathname === '/'){
 		return (
 			<>
-				{!isAuthenticated && <Link to='/auth'>LOGIN</Link>}
-				{isAuthenticated && <Link to='/' onClick={handleLogout}>LOGOUT</Link>}
+				{!isAuthenticated && <Link to='/auth'>login</Link>}
+				{isAuthenticated && <Link to='/' onClick={handleLogout}>logout</Link>}
 			</>
 		)
 	}
 	return (
 		<>
-			<Link to='/'>MY TODOS</Link>
-			{isAuthenticated && <Link to='/' onClick={handleLogout}>LOGOUT</Link>}
+			<Link to='/'>my todos</Link>
+			{isAuthenticated && <Link to='/' onClick={handleLogout}>logout</Link>}
 		</>
 	)
 }
