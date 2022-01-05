@@ -1,9 +1,27 @@
-import React from 'react'
+import React, {useState} from 'react'
 
-const TodoForm = () => {
+const TodoForm = ({addTodo}) => {
+	const[inputValue, setInputValue] = useState('')
+
+	const handleInput = e => {
+		e.target.value.length < 61 && setInputValue(e.target.value)
+	}
+
+	const handleSubmit = e => {
+		if(e.which === 13 && inputValue.length > 0) addTodo(inputValue)
+	}
+	console.log('TodoForm is rendered')
 	return (
 		<section className='form'>
-			<input type='text' id='todoInput' placeholder='insert your task here ...' />
+			<input 
+				type='text' 
+				id='todoInput' 
+				value={inputValue} 
+				onChange={handleInput}
+				onKeyPress={handleSubmit}
+				placeholder='insert your task here ...' 
+				maxlength='60'
+			/>
 		</section>
 		
 	) 
