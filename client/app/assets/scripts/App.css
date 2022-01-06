@@ -111,11 +111,12 @@ li span:first-child {
 li span:last-child {
   float: right;
   color: #c0392b;
-  transition: all 0.3s;
+  transition: all 0.3s ease;
   opacity: 0;
 }
 li span:last-child:hover {
   color: #e74c3c;
+  font-weight: 700;
 }
 
 /*****************************FOOTER STYLES*****************************/
