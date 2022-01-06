@@ -8,7 +8,10 @@ const TodoForm = ({addTodo}) => {
 	}
 
 	const handleSubmit = e => {
-		if(e.which === 13 && inputValue.length > 0) addTodo(inputValue)
+		if(e.which === 13 && inputValue.length > 2) {
+			addTodo(inputValue)
+			setInputValue('')
+		}
 	}
 	console.log('TodoForm is rendered')
 	return (
