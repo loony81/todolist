@@ -5,6 +5,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const PreloadWebpackPlugin = require('preload-webpack-plugin')
 const fse = require('fs-extra')
 
 //our own plugin for copying the images folder into dist
@@ -32,7 +33,13 @@ const config = {
 	//watch, process and bundle this js file which acts as an entry point for entire app
 	entry: './app/assets/scripts/App.js',
 	//the HtmlWebpackPlugin creates a new index.html file each time a new bundle with a different content hash is generated
-	plugins: [new HtmlWebpackPlugin({filename: 'index.html', template: './app/template.html'})],
+	plugins: [
+			new HtmlWebpackPlugin({filename: 'index.html', template: './app/template.html'}),
+			new PreloadWebpackPlugin({
+				rel: 'preload',
+				include:['main','vendors~main']
+			})
+		],
 	module: {
 		rules: [
 			cssConfig,
