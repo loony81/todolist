@@ -5,7 +5,6 @@ const jwt = require('jsonwebtoken')
 const config = require('config')
 
 module.exports = function (req,res,next){
-	console.log(config.get('jwtkey'))
 	const token = req.header('x-auth-token')
 	//if there's no token at all
 	if(!token) return res.status(401).send({message: 'Access denied.'})

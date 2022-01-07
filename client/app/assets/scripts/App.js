@@ -195,7 +195,7 @@ const App = () => {
 		removeTodo,
 		toggleCompletion
 	}
-	console.log('App is rendered')
+
 	return (
 	    <div className='container'>
 	      <Router>

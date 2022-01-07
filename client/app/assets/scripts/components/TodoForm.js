@@ -13,7 +13,7 @@ const TodoForm = ({addTodo}) => {
 			setInputValue('')
 		}
 	}
-	console.log('TodoForm is rendered')
+
 	return (
 		<section className='form'>
 			<input 

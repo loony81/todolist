@@ -2,7 +2,6 @@ import React from 'react'
 
 const TodoItem = ({todo, removeTodo, toggleCompletion}) => {
 	
-	console.log('TodoItem is rendered')
 	return (
 		<li className='task'><span 
 			className={todo.completed && 'done'}
@@ -10,8 +9,7 @@ const TodoItem = ({todo, removeTodo, toggleCompletion}) => {
 			>{todo.name}
 			</span>
 			<span onClick={()=>removeTodo(todo)}> X </span>
-		</li>
-		
+		</li>		
 	) 
 }
 export default TodoItem

@@ -5,7 +5,7 @@ import TodoItem from './TodoItem'
 const TodoList = ({todos, addTodo, removeTodo, toggleCompletion}) => {
 	
 	//if todo has no _id, then name is used as key inside map
-	console.log('TodoList is rendered')
+
 	return (
 		<>
 			<TodoForm addTodo={addTodo} />
