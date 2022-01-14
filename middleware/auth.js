@@ -15,7 +15,7 @@ module.exports = function (req,res,next){
 		req.user = decodedPayload
 		next()
 	} catch(ex){
-		//user provided jwt but it is not valid that's why we have a bad request
-		res.status(400).send({message: 'Invalid token'})
+		//user provided jwt but it is not valid that's why we forbid further access
+		res.status(403).send({message: 'Invalid token'})
 	}
 }

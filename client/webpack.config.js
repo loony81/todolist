@@ -35,6 +35,8 @@ const config = {
 	//the HtmlWebpackPlugin creates a new index.html file each time a new bundle with a different content hash is generated
 	plugins: [
 			new HtmlWebpackPlugin({filename: 'index.html', template: './app/template.html'}),
+			// PreloadWebpackPlugin is an extension plugin for HtmlWebpackPlugin that automatically wires up asynchronous (and other types) of JavaScript chunks using <link rel='preload'>
+			//this helps with lazy-loading
 			new PreloadWebpackPlugin({
 				rel: 'preload',
 				include:['main','vendors~main']
