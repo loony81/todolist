@@ -30,11 +30,6 @@ self.addEventListener('fetch', e =>{
 			.then(cacheRes => {
 				return cacheRes || fetch(e.request)
 			})
-			.catch(() => {
-				if(!e.request.url.endsWith('.json')){
-					return caches.match('/')
-				}
-				caches.match('/')
-			})
+			.catch(() => caches.match('/'))
 	)
 })
