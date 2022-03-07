@@ -1,5 +1,4 @@
 const express = require('express')
-const helmet = require('helmet') // protects the app by adding http headers
 const winston = require('winston') // a package for logging exceptions
 const config = require('config')
 const Joi = require('joi') //a package for data validation in Node/MongoDB applications
@@ -14,7 +13,6 @@ require('./startup/db')() // db related logic
 const port = config.get('port')
 
 //middleware
-app.use(helmet())
 app.use(express.static(__dirname + '/dist'))
 app.use(express.json()) // to handle post and put requests
 app.use(express.urlencoded({extended: true})) // if data is sent via form

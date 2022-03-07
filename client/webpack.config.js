@@ -13,6 +13,8 @@ class RunAfterCompile {
 	apply(compiler){
 		compiler.hooks.done.tap('Copy images', () => {
 			fse.copySync('./app/assets/images', '../dist/assets/images')
+			fse.copySync('./app/manifest.json', '../dist/manifest.json')
+			fse.copySync('./app/sw.js', '../dist/sw.js')
 		})
 	}
 }
