@@ -34,7 +34,6 @@ self.addEventListener('fetch', e =>{
 				if(!e.request.url.endsWith('.json')){
 					return caches.match('/')
 				}
-				caches.match('/')
 			})
 	)
 })
