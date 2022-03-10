@@ -1,2 +1,2 @@
 # todolist
-A todo list web app built using MERN stack
+A todo list pwa built using MERN stack
