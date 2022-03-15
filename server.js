@@ -5,6 +5,9 @@ const Joi = require('joi') //a package for data validation in Node/MongoDB appli
 Joi.objectId = require('joi-objectid')(Joi) // adds id validation to Joi
 const app = express()
 
+app.use(require('./middleware/redirect'))
+
+
 require('./startup/logging')() // handling and logging errors
 require('./startup/config')() //  configuration settings
 require('./startup/db')() // db related logic
