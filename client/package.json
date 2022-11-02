@@ -12,10 +12,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "jwt-check-expiration": "^1.0.5",
     "react": "^17.0.1",
+    "react-beautiful-dnd": "^13.1.1",
     "react-dom": "^17.0.1",
-    "react-router-dom": "^5.2.0",
-    "jwt-check-expiration": "^1.0.5"
+    "react-router-dom": "^5.2.0"
   },
   "devDependencies": {
     "@babel/core": "7.12.3",

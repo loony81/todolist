@@ -188,12 +188,24 @@ const App = () => {
 		setTodos(todos)
 	}
 
+	const handleOnDragEnd = result => {
+		if(!result.destination) return
+		const newTodos = Array.from(todos)
+	    //reorder all todos before saving them in localStorage
+		const [reorderedTodo] = newTodos.splice(result.source.index, 1)	
+		newTodos.splice(result.destination.index, 0, reorderedTodo)
+		localStorage.setItem('todos', JSON.stringify(newTodos))
+		setTodos(newTodos)	
+		// console.log(result)
+	}
+
 	
 
 	const methods = {
 		addTodo,
 		removeTodo,
-		toggleCompletion
+		toggleCompletion,
+		handleOnDragEnd
 	}
 
 	return (

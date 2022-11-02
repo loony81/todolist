@@ -88,7 +88,7 @@ header h2 {
   padding: 0 10px 0 0;
   box-sizing: border-box;
   color: #34495e;
-  transition: all 0.3s ease;
+  /*transition: all 0.3s ease;*/
   overflow: hidden;
 }
 .task:hover {
