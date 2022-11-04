@@ -1,4 +1,4 @@
-import {getTodosFromLS} from './ls'
+import {getTodosFromLS, removeTodoFromLS} from './ls'
 const todosApi = '/api/todos/'
 
 export async function authenticate(url, body){
@@ -86,11 +86,13 @@ export async function initialSync(){
 	if(remoteTodos){
 		if(remoteTodos.length !== 0){
 			if(failedToSync.length === 0){
-				localStorage.setItem('todos', JSON.stringify(remoteTodos))
-				return remoteTodos
-			} else {
-				const todos = combineRemoteTodosWithFailedTodos(remoteTodos, failedToSync)
+				const todos = combineRemoteTodosAndLocalTodos(remoteTodos)
 				localStorage.setItem('todos', JSON.stringify(todos))
+				return todos
+			} else {
+				const todos1 = combineRemoteTodosWithFailedTodos(remoteTodos, failedToSync)
+				const todos2 = combineRemoteTodosAndLocalTodos(todos1)
+				localStorage.setItem('todos', JSON.stringify(todos2))
 				return todos
 			}
 		} else {
@@ -104,8 +106,43 @@ export async function initialSync(){
 	}
 }
 
+export function combineRemoteTodosAndLocalTodos(remoteTodos){
+	const localTodos = getTodosFromLS()
+	console.log(remoteTodos)
+	const result = [...localTodos]
+	console.log(result)
+	// go through local todos and remove those todos that are no longer present remotely (were deleted from another device)
+	// but only if a local todo has an id, which means it was already registered remotely before
+	localTodos.forEach((localTodo, i) => {
+		if(localTodo._id){
+			const present = remoteTodos.find(remoteTodo => localTodo._id === remoteTodo._id && localTodo.name === remoteTodo.name)
+			if(!present) {
+				const index = result.findIndex(todo => todo._id === localTodo._id)
+				result.splice(index,1)
+			}
+		}
+	})
+	//go through remote todos and if there are todos that are not present locally, add them
+	// and also sync data in those todos that present both locally and remotely
+	for(let remoteTodo of remoteTodos){	
+		const alreadyExists = localTodos.find(localTodo => localTodo.name === remoteTodo.name)
+		if(!alreadyExists) result.push(remoteTodo)
+		else {
+			// if the local todo desn't have an id, get it from its remote counterpart
+			if(!alreadyExists._id) {
+				alreadyExists._id = remoteTodo._id
+			}
+			// if the 'completed' property doesn't match, set it equal to what it is on the remoteTodo
+			if(alreadyExists.completed !== remoteTodo.completed){
+				alreadyExists.completed = remoteTodo.completed
+			}
+		} 
+	}
+	return result
+}
 
-// this huge function synchronizes remote todos with local todos
+
+// this huge function synchronizes local todos with remote todos
 export async function syncTodos(){
 	const failedToSync = [] // to keep those todos which failed to sync
 	const localTodos = getTodosFromLS()
@@ -122,7 +159,10 @@ export async function syncTodos(){
 					// a 404 error means the remote todo is no longer there (maybe it was deleted earler from another device)
 					// so we don't need to add it to failedToSync array and can delete it from local storage
 					failedToSync.push(todo)
-				}	
+				} else {
+					//if a todo was successfully deleted on the server, completely delete it from local storage
+					removeTodoFromLS(todo)
+				}
 			}
 		}
 		// then find all those todos which were marked as completed while a user wasn't logged in or was offline
@@ -130,7 +170,7 @@ export async function syncTodos(){
 		// remove them from remote storage
 		if(completedTodos.length) {
 			for(let todo of completedTodos){
-				const remoteTodos = await toggleCompletionOnServer(todo, todo.completed)
+				const remoteTodos = await toggleCompletionOnServer({...todo, completed: !todo.completed})
 				// if the error is 404 it means the remote todo is no longer there (maybe it was deleted earler from another device)
 				// so we don't need to add it to failedToSync array and can delete it from local storage
 				if(remoteTodos.error && remoteTodos.error !== 'The todo with the given ID was not found.'){

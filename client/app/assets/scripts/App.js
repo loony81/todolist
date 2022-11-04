@@ -21,7 +21,8 @@ import {
 	initialSync, 
 	addTodoToServer, 
 	removeTodoFromServer, 
-	toggleCompletionOnServer
+	toggleCompletionOnServer,
+	combineRemoteTodosAndLocalTodos
 } from './utils/api'
 
 // for hot module replacement
@@ -93,8 +94,9 @@ const App = () => {
 							addTodoToLS(name, completed)
 							setTodos([...todos, {name, completed}])
 						} else {
-							localStorage.setItem('todos', JSON.stringify(remoteTodos)) 
-							setTodos(remoteTodos)
+							const todos = combineRemoteTodosAndLocalTodos(remoteTodos)
+							localStorage.setItem('todos', JSON.stringify(todos)) 
+							setTodos(todos)
 						}
 					} else {
 						// if failedToSync contains something, then don't add this todo to remote server
@@ -132,6 +134,7 @@ const App = () => {
 							todos = removeTodoFromLS(todo, true)
 						}
 					} else {
+						todos = combineRemoteTodosAndLocalTodos(todos)
 						localStorage.setItem('todos', JSON.stringify(todos)) 
 					}
 				} else {
@@ -172,6 +175,7 @@ const App = () => {
 						todos = toggleCompletionInLS(todo)
 					}
 				} else {
+					todos = combineRemoteTodosAndLocalTodos(todos)
 					localStorage.setItem('todos', JSON.stringify(todos)) 
 				}
 			} else {
