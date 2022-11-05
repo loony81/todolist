@@ -108,9 +108,7 @@ export async function initialSync(){
 
 export function combineRemoteTodosAndLocalTodos(remoteTodos){
 	const localTodos = getTodosFromLS()
-	console.log(remoteTodos)
 	const result = [...localTodos]
-	console.log(result)
 	// go through local todos and remove those todos that are no longer present remotely (were deleted from another device)
 	// but only if a local todo has an id, which means it was already registered remotely before
 	localTodos.forEach((localTodo, i) => {
