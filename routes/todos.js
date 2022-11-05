@@ -21,6 +21,11 @@ router.post('/', auth, async (req, res) => {
 	const {error} = validate(req.body)
 	if(error) return res.status(400).send({message: error.details[0].message})
 	const user  = await User.findById(req.user._id)
+	const alreadyExists = user.todos.find(todo => todo.name === req.body.name)
+	if(alreadyExists){
+		//if a todo with the same name already exists just return without saving this todo to the db
+		return res.json(user.todos)
+	}
 	const todo = new Todo({
 		name: req.body.name,
 		completed: req.body.completed
