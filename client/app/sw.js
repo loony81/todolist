@@ -2,9 +2,9 @@ const staticCacheName = 'site-static-v1'
 const urlsToCache = [
 	'/', 
 	'/index.html', 
-	'/main.7b71bd74cd7603de3974.js', 
+	'/main.4a411d5b7b03133fea56.js', 
 	'/vendors~main.55bd848a3d4270621187.js', 
-	'/styles.7b71bd74cd7603de3974.css',
+	'/styles.4a411d5b7b03133fea56.css',
 	'https://fonts.googleapis.com/css?family=Montserrat:300;400;700&display=swap',
 	'/manifest.json'
 	]
