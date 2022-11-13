@@ -9,7 +9,7 @@ const TodoItem = ({todo, removeTodo, toggleCompletion, provided}) => {
 				onClick={()=>toggleCompletion(todo)}
 			>{todo.name}
 			</span>
-			<span onClick={()=>removeTodo(todo)}> X </span>
+			<span className='material-icons' onClick={()=>removeTodo(todo)}>delete</span>
 		</li>		
 	) 
 }

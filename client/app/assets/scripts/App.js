@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import {BrowserRouter as Router} from 'react-router-dom'
 import regeneratorRuntime from "regenerator-runtime"
 import { isJwtExpired } from 'jwt-check-expiration'
+import 'material-icons/iconfont/material-icons.css'
 import './App.css'
 import Header from './components/Header'
 import Footer from './components/Footer'

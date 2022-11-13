@@ -15,6 +15,8 @@ class RunAfterCompile {
 			fse.copySync('./app/assets/images', '../dist/assets/images')
 			fse.copySync('./app/manifest.json', '../dist/manifest.json')
 			fse.copySync('./app/sw.js', '../dist/sw.js')
+			fse.copySync('./app/material-icons.woff', '../dist/material-icons.woff')
+			fse.copySync('./app/material-icons.woff2', '../dist/material-icons.woff2')
 		})
 	}
 }

@@ -2,10 +2,15 @@ const staticCacheName = 'site-static-v1'
 const urlsToCache = [
 	'/', 
 	'/index.html', 
-	'/main.4a411d5b7b03133fea56.js', 
-	'/vendors~main.55bd848a3d4270621187.js', 
-	'/styles.4a411d5b7b03133fea56.css',
+	'/main.f07b7a5f24ea1dbe9d41.js', 
+	'/vendors~main.22ace46747788d1d4db6.js', 
+	'/styles.22ace46747788d1d4db6.css',
+	'/styles.f07b7a5f24ea1dbe9d41.css',
 	'https://fonts.googleapis.com/css?family=Montserrat:300;400;700&display=swap',
+	'https://fonts.gstatic.com/s/montserrat/v25/JTUHjIg1_i6t8kCHKm4532VJOt5-QNFgpCs16Hw0aXpsog.woff2',
+	'https://fonts.gstatic.com/s/montserrat/v25/JTUHjIg1_i6t8kCHKm4532VJOt5-QNFgpCs16Hw5aXo.woff2',
+	'material-icons.woff',
+	'material-icons.woff2',
 	'/manifest.json'
 	]
 // install service worker
